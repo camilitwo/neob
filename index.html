@@ -3,8 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <!-- add welcome css -->
+    <link rel="stylesheet" href="/assets/css/welcome.component.css">
 </head>
 <body>
+    <div class="hero">
+
+        <div id="navbar-placeholder"></div>
+
+        <div class="container">
+            <h1>¡La Barbería que está revolucionando Quilicura!</h1>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('navbar.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('navbar-placeholder').innerHTML = data;
+                })
+                .catch(error => console.error('Error al cargar el navbar:', error));
+        });
+    </script>
 
 </body>
 </html>

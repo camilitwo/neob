@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/assets/css/navbar.component.css">
+  <title>BarberHub</title>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container">
+    <h1 class="logo"><a href="/">BarberHub</a></h1>
+    <button class="nav-toggle" onclick="toggleMenu()" aria-label="Abrir menú" aria-expanded="false">
+      <span class="hamburger"></span>
+    </button>
+    <ul class="nav-menu">
+      <li><a href="/" class="nav-link">NEO</a></li>
+      <li><a href="/about" class="nav-link">Nosotros</a></li>
+      <li><a href="/services" class="nav-link">Servicios</a></li>
+      <li><a href="/contact" class="nav-link">Contacto</a></li>
+      <li><a href="/faq" class="nav-link">FAQs</a></li>
+    </ul>
+  </div>
+</nav>
+
+<script>
+  function toggleMenu() {
+    const navMenu = document.querySelector('.nav-menu');
+    const hamburger = document.querySelector('.hamburger');
+    if (navMenu) {
+      navMenu.classList.toggle('active');
+    }
+    if (hamburger) {
+      hamburger.classList.toggle('active');
+    }
+  }
+
+  function setCurrentLink() {
+    const links = document.querySelectorAll('.nav-link');
+    links.forEach(link => {
+      if (link.href === window.location.href) {
+        link.classList.add('current');
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    class Navbar {
+      constructor(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+      }
+
+      isPlatformBrowser() {
+        return true; // Por simplicidad, retorna true para todos los casos
+      }
+
+      ngOnInit() {
+        if (this.isPlatformBrowser()) {
+          this.renderer.listen(window, 'scroll', () => {
+            this.fixNav();
+          });
+        }
+        setCurrentLink();
+      }
+
+      fixNav() {
+        const nav = this.el.querySelector('.nav');
+        if (window.scrollY > nav.offsetHeight + 150) {
+          this.renderer.addClass(nav, 'active');
+        } else {
+          this.renderer.removeClass(nav, 'active');
+        }
+      }
+    }
+
+    // Uso de un objeto Renderer de ejemplo
+    const renderer = {
+      listen: (target, event, callback) => target.addEventListener(event, callback),
+      addClass: (element, className) => element.classList.add(className),
+      removeClass: (element, className) => element.classList.remove(className),
+    };
+
+    // Selecciona el primer elemento con la clase 'nav'
+    const el = document.querySelector('.nav');
+
+    const navbar = new Navbar(renderer, el);
+    navbar.ngOnInit();
+  });
+</script>
+
+</body>
+</html>
