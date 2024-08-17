@@ -16,9 +16,9 @@
     <ul class="nav-menu">
       <li><a href="index.html" class="nav-link">NEO</a></li>
       <li><a href="about.html" class="nav-link">Nosotros</a></li>
-      <li><a href="/services" class="nav-link">Servicios</a></li>
-      <li><a href="/contact" class="nav-link">Contacto</a></li>
-      <li><a href="/faq" class="nav-link">FAQs</a></li>
+      <li><a href="services.html" class="nav-link">Servicios</a></li>
+      <li><a href="contact.html" class="nav-link">Contacto</a></li>
+      <li><a href="faq.html" class="nav-link">FAQs</a></li>
     </ul>
   </div>
 </nav>
@@ -33,6 +33,9 @@
     if (hamburger) {
       hamburger.classList.toggle('active');
     }
+    // Actualizamos el atributo aria-expanded
+    const expanded = hamburger.classList.contains('active');
+    document.querySelector('.nav-toggle').setAttribute('aria-expanded', expanded);
   }
 
   function setCurrentLink() {
@@ -45,47 +48,16 @@
   }
 
   document.addEventListener('DOMContentLoaded', function() {
-    class Navbar {
-      constructor(renderer, el) {
-        this.renderer = renderer;
-        this.el = el;
+    const nav = document.querySelector('.nav');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > nav.offsetHeight + 150) {
+        nav.classList.add('active');
+      } else {
+        nav.classList.remove('active');
       }
+    });
 
-      isPlatformBrowser() {
-        return true; // Por simplicidad, retorna true para todos los casos
-      }
-
-      ngOnInit() {
-        if (this.isPlatformBrowser()) {
-          this.renderer.listen(window, 'scroll', () => {
-            this.fixNav();
-          });
-        }
-        setCurrentLink();
-      }
-
-      fixNav() {
-        const nav = this.el.querySelector('.nav');
-        if (window.scrollY > nav.offsetHeight + 150) {
-          this.renderer.addClass(nav, 'active');
-        } else {
-          this.renderer.removeClass(nav, 'active');
-        }
-      }
-    }
-
-    // Uso de un objeto Renderer de ejemplo
-    const renderer = {
-      listen: (target, event, callback) => target.addEventListener(event, callback),
-      addClass: (element, className) => element.classList.add(className),
-      removeClass: (element, className) => element.classList.remove(className),
-    };
-
-    // Selecciona el primer elemento con la clase 'nav'
-    const el = document.querySelector('.nav');
-
-    const navbar = new Navbar(renderer, el);
-    navbar.ngOnInit();
+    setCurrentLink();
   });
 </script>
 

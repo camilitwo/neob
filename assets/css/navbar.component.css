@@ -4,6 +4,9 @@
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .nav {
@@ -15,16 +18,10 @@
   transition: all 0.3s ease-in-out;
   z-index: 1000;
   font-family: 'Open Sans', sans-serif;
-  width: 100%;
-
 }
 
 .nav .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 0;
-  transition: all 0.3s ease-in-out;
+  padding: 15px 20px;
 }
 
 .nav ul {
@@ -32,7 +29,8 @@
   list-style-type: none;
   align-items: center;
   justify-content: center;
-  padding-left: 0; /* Asegura que no haya padding adicional */
+  padding-left: 0;
+  margin: 0;
 }
 
 .nav a {
@@ -40,6 +38,7 @@
   text-decoration: none;
   padding: 7px 15px;
   transition: all 0.3s ease-in-out;
+  font-size: 16px; /* Aumentado para mejor legibilidad */
 }
 
 .nav.active {
@@ -52,7 +51,7 @@
 }
 
 .nav.active .container {
-  padding: 10px 0;
+  padding: 10px 20px;
 }
 
 .nav a.current,
@@ -61,31 +60,32 @@
   font-weight: bold;
 }
 
-
 @media (max-width: 768px) {
+  .nav .container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .nav-menu {
-    display: none;
+    display: none; /* Cambiado para ocultar inicialmente */
     flex-direction: column;
     width: 100%;
-    position: absolute;
-    top: 100%; /* Esto asegura que el menú se despliegue justo debajo del navbar */
-    left: 0;
     background-color: #333;
-    padding: 1rem;
-    transition: max-height 0.3s ease-in-out;
-    max-height: 0;
-    overflow: hidden;
+    padding: 1rem 0;
   }
+
   .nav-menu.active {
-    display: flex;
-    max-height: 300px; /* Ajusta esto según la cantidad de elementos en el menú */
+    display: flex; /* Se muestra cuando se hace clic */
   }
+
   .nav-toggle {
     display: block;
     background: none;
     border: none;
     cursor: pointer;
+    margin-left: auto;
   }
+
   .hamburger {
     width: 1.5rem;
     height: 2px;
@@ -93,7 +93,9 @@
     position: relative;
     transition: all 0.3s ease-in-out;
   }
-  .hamburger::before, .hamburger::after {
+
+  .hamburger::before,
+  .hamburger::after {
     content: '';
     width: 1.5rem;
     height: 2px;
@@ -101,10 +103,26 @@
     position: absolute;
     transition: all 0.3s ease-in-out;
   }
+
   .hamburger::before {
     top: -0.5rem;
   }
+
   .hamburger::after {
     top: 0.5rem;
+  }
+
+  .hamburger.active {
+    transform: rotate(45deg);
+  }
+
+  .hamburger.active::before {
+    top: 0;
+    transform: rotate(90deg);
+  }
+
+  .hamburger.active::after {
+    top: 0;
+    transform: rotate(90deg);
   }
 }
